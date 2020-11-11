@@ -59,7 +59,7 @@ def save_to_db():
                 data.append(book_in)
                 file.seek(0)
                 json.dump(data, file)
-        except FileNotFoundError:
+        except (FileNotFoundError, json.JSONDecodeError):
             with open('book_database_json.txt', 'w') as file:
                 initiate_db = []
                 initiate_db.append(book_in)
