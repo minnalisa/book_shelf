@@ -7,11 +7,15 @@ def initiate_db():
     cursor.execute('CREATE TABLE IF NOT EXISTS books(name text primary key, author text, year integer, read integer)')
     connection.commit()
 
-
+   
 def add_db(book, author, year):
-    cursor.execute("INSERT INTO books VALUES(?, ?, ?, 0)", (book, author, year))
-    connection.commit()
-    
+    try: 
+        cursor.execute("INSERT INTO books VALUES(?, ?, ?, 0)", (book, author, year))
+        connection.commit()
+        return (f"Added '{book}' {author} {year} to the book store.")
+    except sqlite3.IntegrityError:
+        return f"BOOK: '{book}' by {author} already exists in the database."
+
 
 def retrive_db():
     cursor.execute('SELECT * from books')
